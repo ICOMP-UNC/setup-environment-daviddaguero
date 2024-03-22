@@ -27,3 +27,4 @@ file(GLOB_RECURSE SOURCES "src/*.c")
 # Create the executable
 # See: https://cmake.org/cmake/help/latest/command/add_executable.html
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
+
