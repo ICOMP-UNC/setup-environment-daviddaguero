@@ -3,8 +3,8 @@ name: QA Workflow
 on:
     workflow_dispatch:
     pull_request:
-    # Pull request events
-    types: [synchronize, opened, reopened, ready_for_review]
+        # Pull request events
+        types: [synchronize, opened, reopened, ready_for_review]
 
 jobs:
     build:
@@ -16,7 +16,7 @@ jobs:
             with:
                 submodules: recursive
 
-          - name: Install dependencies::
+          - name: Install dependencies
             uses: awalsh/128/cache-apt-pkgs-action@latest
             with:
                 packages: doxygen gcovr lcov cppcheck graphviz clang-format valgrind
