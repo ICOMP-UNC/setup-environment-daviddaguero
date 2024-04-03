@@ -6,7 +6,7 @@ runs:
     steps:
         - name: "Run doxygen command"
           shell: bash
-          run: /
+          run: |
             # We only make check, not changes
             DOX_CONF_FILE=$(pwd)/Doxyfile
 

@@ -2,42 +2,42 @@ name: "Style check"
 description: "Style check using clang-format"
 
 runs:
-    using: "composite"
-    steps:
-        - name: "Run clang-format"
-          shell: bash
-          run: /
-            # We only make check, not changes
-            # Use the find command with the variable
-            PROJECT_PATH=$(pwd)
+  using: "composite"
+  steps:
+    - name: "Run clang-format"
+      shell: bash
+      run: |
+        # We only make check, not changes
+        # Use the find command with the variable
+        PROJECT_PATH=$(pwd)
 
-            echo $PROJECT_PATH
+        echo $PROJECT_PATH
 
-            # ToDo: Add documentation about 'tr' command and describe better this command
-            SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name))
-            SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or))
-            SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name))
+        # ToDo: Add documentation about 'tr' command and describe better this command
+        SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name))
+        SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or))
+        SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name))
 
-            ERROR_FILE_FLAG=$PROJECT_PATH/clang-format_errors.txt
+        ERROR_FILE_FLAG=$PROJECT_PATH/clang-format_errors.txt
 
-            # ToDo: Add documentation and describe better this command
-            CLANG_COMMAND=$(clang-format -i $SOURCE_FILES) > ${ERROR_FILE_FLAG}
+        # ToDo: Add documentation and describe better this command
+        CLANG_COMMAND=$(clang-format -i $SOURCE_FILES) > ${ERROR_FILE_FLAG}
 
-            echo "Running: clang-format -i $SOURCE_FILES"
+        echo "Running: clang-format -i $SOURCE_FILES"
 
-            if [ -s $ERROR_FILE_FLAG ]; then
-                echo "Error: There are some files that are not formatted correctly"
-                exit 1
-            else
-                echo "All files are formatted correctly. Niiice"
-                exit 0
-            fi
+        if [ -s $ERROR_FILE_FLAG ]; then
+            echo "Error: There are some files that are not formatted correctly"
+            exit 1
+        else
+            echo "All files are formatted correctly. Niiice"
+            exit 0
+        fi
 
-          # Upload errors as an artifact, when failed
-        - uses: actions/upload-artifact@v3
-          if: failure()
-          with:
-            name: Clang-format errors!!!
-            path: $PROJECT_PATH/clang-format_errors.txt
-            retention-days: 1
+    # Upload errors as an artifact, when failed
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: Clang-format errors!!!
+        path: $PROJECT_PATH/clang-format_errors.txt
+        retention-days: 1
 
