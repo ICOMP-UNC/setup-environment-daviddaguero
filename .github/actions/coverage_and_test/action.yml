@@ -1,9 +1,9 @@
 name: "Test and coverage check"
 description: "Test and coverage check with gcovr, pass if coverage is greater than 20%"
 
-runs: 
+runs:
   using: "composite"
-  steps: 
+  steps:
     - name: "Run coverage"
       shell: bash
       run: |
@@ -17,7 +17,7 @@ runs:
 
         gcovr -r $PROJECT_PATH . > $PROJECT_PATH/coverage.txt
 
-        echo "Running: gcovr -r $PROJECT_PATH ."
+        echo "Runnig: gcovr -r $PROJECT_PATH ."
 
         cat $PROJECT_PATH/coverage.txt
 
@@ -26,7 +26,7 @@ runs:
         COVERAGE_RESULT=$(grep "TOTAL" $PROJECT_PATH/coverage.txt | awk '{print $NF}' | cut -d '%' -f 1)
 
         # Coverage lines GT 20
-        if [ "$(echo "$COVERAGE_RESULT > 20" | bc)" -eq 1]; then
+        if [ "$(echo "$COVERAGE_RESULT > 20" | bc)" -eq 1 ]; then
             echo "Coverage is greater than 20%. Nice!"
             exit 0
         else

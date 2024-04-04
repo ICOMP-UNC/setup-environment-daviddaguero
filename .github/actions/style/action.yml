@@ -14,9 +14,9 @@ runs:
         echo $PROJECT_PATH
 
         # ToDo: Add documentation about 'tr' command and describe better this command
-        SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name))
-        SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or))
-        SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name))
+        SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
+        SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
+        SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
 
         ERROR_FILE_FLAG=$PROJECT_PATH/clang-format_errors.txt
 
@@ -29,7 +29,7 @@ runs:
             echo "Error: There are some files that are not formatted correctly"
             exit 1
         else
-            echo "All files are formatted correctly. Niiice"
+            echo "All files are formatted correctly. Niiiceee"
             exit 0
         fi
 
@@ -40,4 +40,3 @@ runs:
         name: Clang-format errors!!!
         path: $PROJECT_PATH/clang-format_errors.txt
         retention-days: 1
-
